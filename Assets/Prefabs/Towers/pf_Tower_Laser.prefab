@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4618055407632685290}
   - component: {fileID: 5069004969765247943}
   - component: {fileID: -2674482002007741780}
-  - component: {fileID: -9053407814356759617}
   - component: {fileID: -162530454408009483}
   m_Layer: 0
   m_Name: pf_Tower_Laser
@@ -128,18 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiresOppositePair: 1
   maxPairs: 2
---- !u!114 &-9053407814356759617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912445979710594687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db2266040b8314f6ab2d4997d5247f6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-162530454408009483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70f360fffa654349b3c10c06839cbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 500
+  hp: 10
   immortalTower: 0
 --- !u!1 &4533105685070794597
 GameObject:

@@ -7,43 +7,103 @@ public class PairedTowerRule : MonoBehaviour
     public bool requiresOppositePair = true;
     public int maxPairs = 2;
 
-    // Per tower-type tracking
-    static Dictionary<string, int> pairCounts = new();
+    // ================= STATIC STATE =================
+    // One counter PER PREFAB (Laser independent from Shield)
+    static Dictionary<GameObject, int> activePairs = new();
 
-    string key;
+    // ================= INSTANCE STATE =================
+    PairedTowerRule partner;
+    bool isOwner;
+    bool isDestroying;
 
-    // 🔑 Ensure key & dictionary entry always exist
-    void EnsureInitialized()
+    GameObject prefabKey;
+
+    void Awake()
     {
-        if (string.IsNullOrEmpty(key))
-            key = gameObject.name.Replace("(Clone)", "").Trim();
-
-        if (!pairCounts.ContainsKey(key))
-            pairCounts[key] = 0;
+        prefabKey = ResolvePrefabKey();
+        EnsureEntry();
     }
 
+    // ================= PUBLIC API =================
     public bool CanPlacePair()
     {
-        EnsureInitialized();
-        return pairCounts[key] < maxPairs;
+        prefabKey = ResolvePrefabKey();
+        EnsureEntry();
+        return activePairs[prefabKey] < maxPairs;
     }
 
-    public void RegisterPair(float angle)
+    /// <summary>
+    /// Call ONCE on the PRIMARY tower after BOTH are spawned
+    /// </summary>
+    public void RegisterPair(PairedTowerRule other)
     {
-        EnsureInitialized();
-        pairCounts[key]++;
+        if (!other || partner != null)
+            return;
+
+        prefabKey = ResolvePrefabKey();
+        EnsureEntry();
+
+        if (activePairs[prefabKey] >= maxPairs)
+            return;
+
+        partner = other;
+        other.partner = this;
+
+        isOwner = true;
+        activePairs[prefabKey]++;
     }
 
-    public float GetOppositeAngle(float angle)
+    // ================= DESTRUCTION =================
+    public void DestroyPair()
     {
-        angle += 180f;
-        if (angle >= 360f) angle -= 360f;
-        return angle;
+        if (isDestroying)
+            return;
+
+        isDestroying = true;
+
+        prefabKey = ResolvePrefabKey();
+        EnsureEntry();
+
+        if (isOwner)
+        {
+            activePairs[prefabKey] =
+                Mathf.Max(0, activePairs[prefabKey] - 1);
+        }
+
+        if (partner && !partner.isDestroying)
+        {
+            partner.isDestroying = true;
+            Destroy(partner.gameObject);
+        }
+
+        Destroy(gameObject);
     }
 
-    // Optional: call on level reset
+    // ================= INTERNAL =================
+    void EnsureEntry()
+    {
+        if (prefabKey == null)
+            return;
+
+        if (!activePairs.ContainsKey(prefabKey))
+            activePairs[prefabKey] = 0;
+    }
+
+    GameObject ResolvePrefabKey()
+    {
+#if UNITY_EDITOR
+        var prefab =
+            UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(gameObject);
+
+        return prefab != null ? prefab : gameObject;
+#else
+        return gameObject;
+#endif
+    }
+
+    // ================= DEBUG =================
     public static void ResetAll()
     {
-        pairCounts.Clear();
+        activePairs.Clear();
     }
 }

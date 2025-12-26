@@ -2,17 +2,43 @@ using UnityEngine;
 
 public class TowerHealth : MonoBehaviour
 {
-    public float hp = 100f;
+    [Header("Health")]
+    public float maxHP = 100f;
     public bool immortalTower = false;
+
+    float currentHP;
+
+    PairedTowerRule pairedRule;
+
+    void Awake()
+    {
+        currentHP = maxHP;
+        pairedRule = GetComponent<PairedTowerRule>();
+    }
 
     public void TakeDamage(float dmg)
     {
         if (immortalTower)
             return;
 
-        hp -= dmg;
+        currentHP -= dmg;
 
-        if (hp <= 0f)
-            Destroy(gameObject);
+        if (currentHP <= 0f)
+        {
+            HandleDeath();
+        }
+    }
+
+    void HandleDeath()
+    {
+        // ✅ Paired tower → destroy whole pair
+        if (pairedRule != null)
+        {
+            pairedRule.DestroyPair();
+            return;
+        }
+
+        // ✅ Normal single tower
+        Destroy(gameObject);
     }
 }

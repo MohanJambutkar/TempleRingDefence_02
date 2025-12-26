@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1387201519933892958}
   - component: {fileID: 8315701759616799156}
   - component: {fileID: 3566308842006945239}
-  - component: {fileID: -1093850323105786909}
+  - component: {fileID: 6722739340451359541}
+  - component: {fileID: -6382138043449986969}
   m_Layer: 0
   m_Name: pf_Tower_Shield
   m_TagString: 'Tower '
@@ -109,7 +110,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1093850323105786909
+--- !u!114 &6722739340451359541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,3 +124,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiresOppositePair: 1
   maxPairs: 2
+--- !u!114 &-6382138043449986969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868351885906484525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70f360fffa654349b3c10c06839cbff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 50
+  immortalTower: 0

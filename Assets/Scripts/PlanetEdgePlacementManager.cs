@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PlanetEdgePlacementManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class PlanetEdgePlacementManager : MonoBehaviour
 
     [Header("Placement Settings")]
     public float planetRadius = 3f;
-    public float minAngleSpacing = 15f;
+    public float minEdgeSpacing = 0.6f;
 
     [Header("Ghost Materials")]
     public Material ghostValidMat;
@@ -21,13 +20,9 @@ public class PlanetEdgePlacementManager : MonoBehaviour
     public GameObject[] towerPrefabs;
 
     int selectedIndex = -1;
-
     GameObject ghostPrimary;
     GameObject ghostOpposite;
     float ghostBottomOffset;
-
-    // 🔑 STORE ANGLES IN PLANET-LOCAL SPACE
-    readonly List<float> occupiedAngles = new();
 
     void Update()
     {
@@ -40,7 +35,7 @@ public class PlanetEdgePlacementManager : MonoBehaviour
         if (ghostPrimary == null || selectedIndex < 0)
             return;
 
-        UpdateGhostPosition2D();
+        UpdateGhost();
 
         if (Input.GetMouseButtonDown(0))
             TryPlaceTower();
@@ -59,12 +54,12 @@ public class PlanetEdgePlacementManager : MonoBehaviour
         ghostBottomOffset = CalculateBottomOffset(ghostPrimary);
         ApplyGhostMaterial(ghostPrimary, ghostValidMat);
 
-        PairedTowerRule pairRule =
-            ghostPrimary.GetComponent<PairedTowerRule>();
+        PairedTowerRule rule =
+            towerPrefabs[index].GetComponent<PairedTowerRule>();
 
-        if (pairRule && pairRule.requiresOppositePair)
+        if (rule && rule.requiresOppositePair)
         {
-            if (!pairRule.CanPlacePair())
+            if (!rule.CanPlacePair())
             {
                 CancelPlacement();
                 return;
@@ -76,7 +71,7 @@ public class PlanetEdgePlacementManager : MonoBehaviour
     }
 
     // ================= CORE =================
-    void UpdateGhostPosition2D()
+    void UpdateGhost()
     {
         Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mouseWorld, Vector2.zero);
@@ -86,29 +81,23 @@ public class PlanetEdgePlacementManager : MonoBehaviour
 
         Vector2 dir = (hit.point - (Vector2)planet.position).normalized;
 
-        float angle = GetPlanetLocalAngle(dir);
-        bool valid = IsAngleFree(angle);
-
-        // PRIMARY
         ghostPrimary.transform.position =
             planet.position + (Vector3)(dir * (planetRadius + ghostBottomOffset));
-
         ghostPrimary.transform.rotation =
-            Quaternion.LookRotation(Vector3.forward, dir);
+            Quaternion.FromToRotation(Vector3.up, dir);
 
-        // OPPOSITE
+        bool valid = IsPositionFree(ghostPrimary.transform.position);
+
         if (ghostOpposite)
         {
             Vector2 oppDir = -dir;
-            float oppAngle = angle + 180f;
-
-            valid &= IsAngleFree(oppAngle);
 
             ghostOpposite.transform.position =
                 planet.position + (Vector3)(oppDir * (planetRadius + ghostBottomOffset));
-
             ghostOpposite.transform.rotation =
-                Quaternion.LookRotation(Vector3.forward, oppDir);
+                Quaternion.FromToRotation(Vector3.up, oppDir);
+
+            valid &= IsPositionFree(ghostOpposite.transform.position);
         }
 
         ApplyGhostMaterial(ghostPrimary, valid ? ghostValidMat : ghostInvalidMat);
@@ -118,80 +107,46 @@ public class PlanetEdgePlacementManager : MonoBehaviour
 
     void TryPlaceTower()
     {
-        Vector2 dir =
-            (ghostPrimary.transform.position - planet.position).normalized;
-
-        float angle = GetPlanetLocalAngle(dir);
-
-        if (!IsAngleFree(angle))
+        if (!IsPositionFree(ghostPrimary.transform.position))
             return;
 
-        PairedTowerRule pairRule =
-            towerPrefabs[selectedIndex].GetComponent<PairedTowerRule>();
-
-        if (pairRule && !pairRule.CanPlacePair())
-            return;
-
-        // ---- PRIMARY ----
-        GameObject tower = Instantiate(
+        GameObject primary = Instantiate(
             towerPrefabs[selectedIndex],
             ghostPrimary.transform.position,
             ghostPrimary.transform.rotation,
             towerParent
         );
 
-        occupiedAngles.Add(angle);
-        tower.AddComponent<PlacedTowerAngle>()
-             .Init(this, angle);
+        PairedTowerRule primaryPair =
+            primary.GetComponent<PairedTowerRule>();
 
-        // ---- OPPOSITE ----
-        if (ghostOpposite && pairRule)
+        if (ghostOpposite && primaryPair)
         {
-            float oppAngle = angle + 180f;
-
-            GameObject oppTower = Instantiate(
+            GameObject opposite = Instantiate(
                 towerPrefabs[selectedIndex],
                 ghostOpposite.transform.position,
                 ghostOpposite.transform.rotation,
                 towerParent
             );
 
-            occupiedAngles.Add(oppAngle);
-            oppTower.AddComponent<PlacedTowerAngle>()
-                    .Init(this, oppAngle);
+            PairedTowerRule oppositePair =
+                opposite.GetComponent<PairedTowerRule>();
 
-            pairRule.RegisterPair(angle);
+            primaryPair.RegisterPair(oppositePair);
         }
 
         CancelPlacement();
     }
 
-    // ================= ANGLE SYSTEM =================
-    float GetPlanetLocalAngle(Vector2 dir)
+    // ================= HELPERS =================
+    bool IsPositionFree(Vector3 pos)
     {
-        float worldAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float planetRot = planet.eulerAngles.z;
-        return Mathf.DeltaAngle(planetRot, worldAngle);
-    }
-
-    bool IsAngleFree(float angle)
-    {
-        foreach (float a in occupiedAngles)
-        {
-            if (Mathf.Abs(Mathf.DeltaAngle(a, angle)) < minAngleSpacing)
+        foreach (Transform t in towerParent)
+            if (Vector3.Distance(t.position, pos) < minEdgeSpacing)
                 return false;
-        }
         return true;
     }
 
-    public void ReleaseAngle(float angle)
-    {
-        occupiedAngles.RemoveAll(
-            a => Mathf.Abs(Mathf.DeltaAngle(a, angle)) < 0.1f
-        );
-    }
-
-    // ================= HELPERS =================
     float CalculateBottomOffset(GameObject obj)
     {
         Renderer r = obj.GetComponentInChildren<Renderer>();
@@ -210,8 +165,6 @@ public class PlanetEdgePlacementManager : MonoBehaviour
 
     void ApplyGhostMaterial(GameObject obj, Material mat)
     {
-        if (!obj) return;
-
         foreach (Renderer r in obj.GetComponentsInChildren<Renderer>())
             r.material = mat;
     }

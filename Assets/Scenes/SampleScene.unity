@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 407422869}
   - component: {fileID: 407422870}
   - component: {fileID: 407422871}
+  - component: {fileID: 407422872}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -908,10 +909,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 617001515}
   enableSpawning: 1
-  spawnInterval: 1.5
-  maxAliveEnemies: 20
-  easy: 0
-  normal: 1
+  spawnInterval: 2.5
+  maxAliveEnemies: 10
+  easy: 1
+  normal: 0
   hard: 0
 --- !u!114 &407422871
 MonoBehaviour:
@@ -931,6 +932,20 @@ MonoBehaviour:
   immortalTowers: 0
   rotationSpeedMultiplier: 1
   enemyDamageMultiplier: 1
+--- !u!114 &407422872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407422868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45be89b4ab25406d99baef4a58c87ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiresOppositePair: 1
+  maxPairs: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,8 +1150,8 @@ MonoBehaviour:
   enemyTypes:
   - {fileID: 11400000, guid: 88003f18bea1d4bc8a8b94bdb3c0a3d6, type: 2}
   spawningEnabled: 1
-  spawnInterval: 1.5
-  maxAliveEnemies: 20
+  spawnInterval: 2.5
+  maxAliveEnemies: 10
 --- !u!1 &724610895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1342,7 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   towerParent: {fileID: 1109674932}
   planetRadius: 3
-  minAngleSpacing: 12
+  minEdgeSpacing: 0.6
   ghostValidMat: {fileID: 2100000, guid: 5b091ecd5ccb84ced89b41c1bffe9174, type: 2}
   ghostInvalidMat: {fileID: 2100000, guid: 5fb11a4cfaad34cfb91148c34bbb33a7, type: 2}
   towerPrefabs:
