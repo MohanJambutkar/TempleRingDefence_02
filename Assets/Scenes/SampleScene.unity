@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 407422870}
   - component: {fileID: 407422871}
   - component: {fileID: 407422872}
+  - component: {fileID: 407422873}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -946,6 +947,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiresOppositePair: 1
   maxPairs: 2
+--- !u!114 &407422873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407422868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9270095e850ca4ca0b4954606e57eff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalMaxEnergy: 1000
+  currentEnergy: 0
+  charge01: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,9 +1852,10 @@ GameObject:
   - component: {fileID: 1638236349}
   - component: {fileID: 1638236348}
   - component: {fileID: 1638236347}
+  - component: {fileID: 1638236350}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: SolarLight
+  m_TagString: SolarLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1932,6 +1949,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638236345}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1638236350
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638236345}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1708420793
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,7 +2279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planet: {fileID: 1778787285}
   lightWedge: {fileID: 1638236346}
-  rotationSpeed: 30
+  rotationSpeed: 10
 --- !u!4 &1778787285
 Transform:
   m_ObjectHideFlags: 0

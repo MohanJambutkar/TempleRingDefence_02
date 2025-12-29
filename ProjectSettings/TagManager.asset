@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Planet
   - 'Tower '
+  - SolarLight
   layers:
   - Default
   - TransparentFX
