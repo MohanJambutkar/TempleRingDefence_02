@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 551a2e39e21fc4b6599c46f5cbfbd33c, type: 3}
-  m_Name: ET_MistWisp
+  m_Script: {fileID: 11500000, guid: fa8fe716efaf5423483cf20c06239cfe, type: 3}
+  m_Name: Missile Tower Data
   m_EditorClassIdentifier: 
-  enemyName: Mist Wisp
-  maxHealth: 15
-  moveSpeed: 2
-  damage: 80
-  spawnRadius: 15
-  isFlying: 0
-  placesCorruption: 0
+  missilesPerRound: 5
+  timeBetweenRounds: 1
+  missileSpeed: 4
+  missileDamage: 100
+  spreadAngle: 40
