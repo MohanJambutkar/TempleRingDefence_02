@@ -117,6 +117,10 @@ public class PlanetEdgePlacementManager : MonoBehaviour
             towerParent
         );
 
+        MissileTower primaryMissile = primary.GetComponent<MissileTower>();
+        if (primaryMissile != null)
+            primaryMissile.Arm();
+
         PairedTowerRule primaryPair =
             primary.GetComponent<PairedTowerRule>();
 
@@ -128,6 +132,10 @@ public class PlanetEdgePlacementManager : MonoBehaviour
                 ghostOpposite.transform.rotation,
                 towerParent
             );
+
+            MissileTower oppositeMissile = opposite.GetComponent<MissileTower>();
+            if (oppositeMissile != null)
+                oppositeMissile.Arm();
 
             PairedTowerRule oppositePair =
                 opposite.GetComponent<PairedTowerRule>();

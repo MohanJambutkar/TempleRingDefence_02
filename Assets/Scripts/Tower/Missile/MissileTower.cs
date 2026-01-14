@@ -8,10 +8,31 @@ public class MissileTower : MonoBehaviour
     public Transform muzzle;
     public GameObject missilePrefab;
 
+    [Header("State (Runtime)")]
+    [SerializeField] bool isArmed = false;
     bool firing;
+
+    void Awake()
+    {
+        // 🔒 CRITICAL: Never fire by default
+        isArmed = false;
+        firing = false;
+    }
+
+    /// <summary>
+    /// MUST be called once AFTER tower is placed on planet edge
+    /// </summary>
+    public void Arm()
+    {
+        isArmed = true;
+    }
 
     void Update()
     {
+        // ❌ ABSOLUTE BLOCK
+        if (!isArmed)
+            return;
+
         if (!firing)
             StartCoroutine(FireRoutine());
     }
@@ -37,17 +58,17 @@ public class MissileTower : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            float t = (count == 1) ? 0f : (float)i / (count - 1);
+            float t = (count == 1) ? 0.5f : (float)i / (count - 1);
             float angle = Mathf.Lerp(-spread * 0.5f, spread * 0.5f, t);
 
-            // 🔒 ALWAYS fire along tower local Y axis
+            // ✅ Always fire along tower LOCAL Y axis
             Vector3 fireDir =
                 Quaternion.AngleAxis(angle, Vector3.forward) * muzzle.up;
 
             GameObject missile = Instantiate(
                 missilePrefab,
                 muzzle.position,
-                Quaternion.identity
+                Quaternion.LookRotation(Vector3.forward, fireDir)
             );
 
             StraightMissile sm = missile.GetComponent<StraightMissile>();
