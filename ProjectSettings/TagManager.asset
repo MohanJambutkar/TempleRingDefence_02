@@ -8,6 +8,8 @@ TagManager:
   - Planet
   - 'Tower '
   - SolarLight
+  - 'ammunatoin '
+  - Shield
   layers:
   - Default
   - TransparentFX

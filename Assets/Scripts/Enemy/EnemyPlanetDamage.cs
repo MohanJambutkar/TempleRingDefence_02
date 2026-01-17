@@ -20,20 +20,30 @@ public class EnemyPlanetDamage : MonoBehaviour
 
         bool didDamage = false;
 
-        // 🔹 Planet damage
-        PlanetHealth planet = other.GetComponent<PlanetHealth>();
-        if (planet)
+        // 🛡️ Shield blocks everything
+        ShieldHitReceiver shield = other.GetComponent<ShieldHitReceiver>();
+        if (shield)
         {
-            planet.TakeDamage(enemy.data.damage);
+            shield.TakeDamage(enemy.data.damage);
             didDamage = true;
         }
-
-        // 🔹 Tower damage
-        TowerHealth tower = other.GetComponent<TowerHealth>();
-        if (tower)
+        else
         {
-            tower.TakeDamage(enemy.data.damage);
-            didDamage = true;
+            // 🌍 Planet damage (only if no shield)
+            PlanetHealth planet = other.GetComponent<PlanetHealth>();
+            if (planet)
+            {
+                planet.TakeDamage(enemy.data.damage);
+                didDamage = true;
+            }
+
+            // 🏗️ Tower damage
+            TowerHealth tower = other.GetComponent<TowerHealth>();
+            if (tower)
+            {
+                tower.TakeDamage(enemy.data.damage);
+                didDamage = true;
+            }
         }
 
         // 🔑 Consume enemy ONLY if something was damaged
