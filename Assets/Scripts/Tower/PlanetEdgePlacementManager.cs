@@ -8,6 +8,9 @@ public class PlanetEdgePlacementManager : MonoBehaviour
     public Camera mainCamera;
     public Transform towerParent;
 
+    [Header("Optional Spawn Limiter")]
+    public TowerSpawnLimiter spawnLimiter;
+
     [Header("Placement Settings")]
     public float planetRadius = 3f;
     public float minEdgeSpacing = 0.6f;
@@ -110,12 +113,20 @@ public class PlanetEdgePlacementManager : MonoBehaviour
         if (!IsPositionFree(ghostPrimary.transform.position))
             return;
 
+        // Optional limiter check (does nothing if limiter not assigned)
+        if (spawnLimiter != null &&
+            !spawnLimiter.CanSpawn(towerPrefabs[selectedIndex]))
+            return;
+
         GameObject primary = Instantiate(
             towerPrefabs[selectedIndex],
             ghostPrimary.transform.position,
             ghostPrimary.transform.rotation,
             towerParent
         );
+
+        if (spawnLimiter != null)
+            spawnLimiter.RegisterSpawn(primary);
 
         MissileTower primaryMissile = primary.GetComponent<MissileTower>();
         if (primaryMissile != null)
@@ -132,6 +143,9 @@ public class PlanetEdgePlacementManager : MonoBehaviour
                 ghostOpposite.transform.rotation,
                 towerParent
             );
+
+            if (spawnLimiter != null)
+                spawnLimiter.RegisterSpawn(opposite);
 
             MissileTower oppositeMissile = opposite.GetComponent<MissileTower>();
             if (oppositeMissile != null)

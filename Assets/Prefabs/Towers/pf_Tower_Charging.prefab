@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
-  immortalTower: 1
+  immortalTower: 0
 --- !u!114 &8330841101578836227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,5 +139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aa060effd0f9f4ee98ee0b6a5bd83f98, type: 2}
-  currentEnergy: 0
-  charge01: 0
+  energySystem: {fileID: 0}
+  receivingLight: 0
+  contributionPerSecond: 0
