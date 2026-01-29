@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 9159956212347207891}
   - component: {fileID: 4435147641462356129}
   - component: {fileID: 2659193151459487060}
+  - component: {fileID: 1414752382714821924}
   m_Layer: 0
   m_Name: pf_Tower_Missile
   m_TagString: 'Tower '
@@ -210,3 +211,18 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 1fb55e87af72d4a9d9e6f5389e9f3758, type: 2}
   muzzle: {fileID: 6718279731644144830}
   missilePrefab: {fileID: 2007298982904763655, guid: 0324f02d69936455497823b8a69f9353, type: 3}
+  isArmed: 0
+--- !u!114 &1414752382714821924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7610157914497042572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2f5924880514423a0ffda3335e2601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyCost: 50
+  freeUsageForTesting: 0

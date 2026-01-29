@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6722739340451359541}
   - component: {fileID: -6382138043449986969}
   - component: {fileID: -1822353290177314976}
+  - component: {fileID: 1506217714300026761}
   m_Layer: 0
   m_Name: pf_Tower_Shield
   m_TagString: 'Tower '
@@ -152,3 +153,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldAnchor: {fileID: 0}
+--- !u!114 &1506217714300026761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868351885906484525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2f5924880514423a0ffda3335e2601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyCost: 50
+  freeUsageForTesting: 0

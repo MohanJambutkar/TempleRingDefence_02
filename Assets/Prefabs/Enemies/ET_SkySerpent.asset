@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ET_SkySerpent
   m_EditorClassIdentifier: 
   enemyName: Sky Serpent
-  maxHealth: 60
+  maxHealth: 30
   moveSpeed: 3
   damage: 150
   spawnRadius: 6

@@ -91,6 +91,16 @@ public class TowerSpawnLimiter : MonoBehaviour
         }
     }
 
+    public void ShowLimitMessage()
+    {
+        if (!limitReachedText) return;
+
+        if (textRoutine != null)
+            StopCoroutine(textRoutine);
+
+        textRoutine = StartCoroutine(ShowLimitText());
+    }
+
     IEnumerator ShowLimitText()
     {
         limitReachedText.SetActive(true);

@@ -50,6 +50,13 @@ public class PlanetEdgePlacementManager : MonoBehaviour
         if (index < 0 || index >= towerPrefabs.Length)
             return;
 
+        if (spawnLimiter != null && !spawnLimiter.CanSpawn(towerPrefabs[index]))
+        {
+            spawnLimiter.ShowLimitMessage();
+            return;
+        }
+
+
         CancelPlacement();
         selectedIndex = index;
 
@@ -110,12 +117,13 @@ public class PlanetEdgePlacementManager : MonoBehaviour
 
     void TryPlaceTower()
     {
-        if (!IsPositionFree(ghostPrimary.transform.position))
+        if (spawnLimiter != null && !spawnLimiter.CanSpawn(towerPrefabs[selectedIndex]))
+        {
+            spawnLimiter.ShowLimitMessage();
             return;
+        }
 
-        // Optional limiter check (does nothing if limiter not assigned)
-        if (spawnLimiter != null &&
-            !spawnLimiter.CanSpawn(towerPrefabs[selectedIndex]))
+        if (!IsPositionFree(ghostPrimary.transform.position))
             return;
 
         GameObject primary = Instantiate(
@@ -124,6 +132,12 @@ public class PlanetEdgePlacementManager : MonoBehaviour
             ghostPrimary.transform.rotation,
             towerParent
         );
+
+        TowerEnergyCost primaryCost = primary.GetComponent<TowerEnergyCost>();
+        if (primaryCost != null)
+        {
+            primaryCost.Consume();
+        }
 
         if (spawnLimiter != null)
             spawnLimiter.RegisterSpawn(primary);
@@ -143,6 +157,12 @@ public class PlanetEdgePlacementManager : MonoBehaviour
                 ghostOpposite.transform.rotation,
                 towerParent
             );
+
+            TowerEnergyCost oppositeCost = opposite.GetComponent<TowerEnergyCost>();
+            if (oppositeCost != null)
+            {
+                oppositeCost.Consume();
+            }
 
             if (spawnLimiter != null)
                 spawnLimiter.RegisterSpawn(opposite);

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2954699682680776630}
   - component: {fileID: -3931352800598723479}
   - component: {fileID: 8330841101578836227}
+  - component: {fileID: -3861327486626757048}
   m_Layer: 0
   m_Name: pf_Tower_Charging
   m_TagString: 'Tower '
@@ -142,3 +143,17 @@ MonoBehaviour:
   energySystem: {fileID: 0}
   receivingLight: 0
   contributionPerSecond: 0
+--- !u!114 &-3861327486626757048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843461402929134423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2f5924880514423a0ffda3335e2601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyCost: 50
+  freeUsageForTesting: 0
