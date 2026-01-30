@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -6382138043449986969}
   - component: {fileID: -1822353290177314976}
   - component: {fileID: 1506217714300026761}
+  - component: {fileID: 7705061380046420620}
   m_Layer: 0
   m_Name: pf_Tower_Shield
   m_TagString: 'Tower '
@@ -165,5 +166,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2f5924880514423a0ffda3335e2601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 50
+  energyCost: 100
   freeUsageForTesting: 0
+--- !u!114 &7705061380046420620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868351885906484525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe47bce2ae7d480f910aa9afa5e10f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 3a5e5b8e1a8514c38ac28769f320fa72, type: 2}
+  shieldVisualPrefab: {fileID: 1332980898248380675, guid: d671a5e9f1d3c4979b2057696da443dd, type: 3}
+  planetCenter: {fileID: 0}
+  currentHP: 0
+  hp01: 1

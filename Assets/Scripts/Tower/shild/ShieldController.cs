@@ -21,6 +21,8 @@ public class ShieldController : MonoBehaviour
     GameObject activeShield;
     bool shieldActive;
 
+    TowerEnergyUsage energyUsage;
+
     /* ---------------- STATIC REGISTRATION ---------------- */
 
     public static void RegisterTower(ShieldTower tower)
@@ -43,6 +45,10 @@ public class ShieldController : MonoBehaviour
             if (planet)
                 planetCenter = planet.transform;
         }
+
+        energyUsage = GetComponent<TowerEnergyUsage>();
+        if (!energyUsage)
+            energyUsage = GetComponentInParent<TowerEnergyUsage>();
     }
 
     /* ---------------- INPUT ---------------- */
@@ -73,12 +79,19 @@ public class ShieldController : MonoBehaviour
         if (!data || !shieldVisualPrefab || !planetCenter)
             return;
 
+        if (energyUsage != null && !energyUsage.CanUse())
+            return;
+
         ActivateShield();
     }
 
     void ActivateShield()
     {
         shieldActive = true;
+
+        if (energyUsage != null)
+            energyUsage.Consume();
+
         currentHP = data.maxShieldHP;
 
         activeShield = Instantiate(

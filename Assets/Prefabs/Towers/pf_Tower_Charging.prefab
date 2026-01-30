@@ -141,8 +141,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aa060effd0f9f4ee98ee0b6a5bd83f98, type: 2}
   energySystem: {fileID: 0}
+  energyProductionPerSecond: 2.5
+  bonusPerTower: 0
   receivingLight: 0
-  contributionPerSecond: 0
+  finalEnergyPerSecond: 0
 --- !u!114 &-3861327486626757048
 MonoBehaviour:
   m_ObjectHideFlags: 0

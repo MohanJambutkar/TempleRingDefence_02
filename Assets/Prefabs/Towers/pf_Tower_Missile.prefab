@@ -224,5 +224,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2f5924880514423a0ffda3335e2601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 50
+  energyCost: 100
   freeUsageForTesting: 0

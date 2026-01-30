@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: -2244155075850866881}
   - component: {fileID: -2367200273257129798}
   - component: {fileID: 4367211811259951635}
+  - component: {fileID: 6340260484385840573}
+  - component: {fileID: -1133670715627927737}
   m_Layer: 0
   m_Name: pf_Tower_Laser
   m_TagString: 'Tower '
@@ -281,6 +283,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyCost: 50
   freeUsageForTesting: 0
+--- !u!114 &6340260484385840573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912445979710594687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8a32693f51f4c8ba23a8fbf5e5f22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyCostPerUse: 50
+  cooldown: 5
+  freeUseForTesting: 0
+--- !u!114 &-1133670715627927737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912445979710594687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5858e3ad0114e4e96b01ab567f9cf64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 5274d02882cda4601a5e7837f0a03aea, type: 2}
+  energy: {fileID: 0}
 --- !u!1 &6601848885173506056
 GameObject:
   m_ObjectHideFlags: 0

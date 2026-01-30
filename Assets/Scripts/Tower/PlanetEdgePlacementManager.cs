@@ -158,12 +158,6 @@ public class PlanetEdgePlacementManager : MonoBehaviour
                 towerParent
             );
 
-            TowerEnergyCost oppositeCost = opposite.GetComponent<TowerEnergyCost>();
-            if (oppositeCost != null)
-            {
-                oppositeCost.Consume();
-            }
-
             if (spawnLimiter != null)
                 spawnLimiter.RegisterSpawn(opposite);
 
