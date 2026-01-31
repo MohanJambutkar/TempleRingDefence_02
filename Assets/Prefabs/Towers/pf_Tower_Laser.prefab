@@ -311,7 +311,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 5274d02882cda4601a5e7837f0a03aea, type: 2}
-  energy: {fileID: 0}
 --- !u!1 &6601848885173506056
 GameObject:
   m_ObjectHideFlags: 0
