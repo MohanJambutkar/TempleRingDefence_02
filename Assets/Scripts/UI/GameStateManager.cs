@@ -12,6 +12,10 @@ public class GameStateManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+
+        // Start game in paused state until Play is pressed
+        Time.timeScale = 0f;
+        IsPaused = true;
     }
 
     public void StartGame()
