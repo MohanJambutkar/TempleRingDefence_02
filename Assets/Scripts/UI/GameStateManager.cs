@@ -55,4 +55,15 @@ public class GameStateManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+    public void GameOver()
+{
+    Time.timeScale = 0f;
+    IsPaused = true;
+
+    if (ui != null)
+        ui.ShowEnd(
+            ScoreManager.Instance.TotalScore,
+            ScoreManager.Instance.SurvivedTimeFormatted
+        );
+}
 }

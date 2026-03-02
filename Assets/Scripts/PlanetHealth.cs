@@ -42,8 +42,16 @@ public class PlanetHealth : MonoBehaviour
 
             if (currentLives <= 0)
             {
+                currentLives = 0;
+                currentHP = 0f;
+
                 Debug.Log("PLANET DESTROYED");
-                // later: GameOver
+
+                if (ScoreManager.Instance != null)
+                    ScoreManager.Instance.StopScoring();
+
+                if (GameStateManager.Instance != null)
+                    GameStateManager.Instance.GameOver();
             }
             else
             {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8af8a4d9afb5403f96731e0aad98196, type: 3}
   m_Name: PT_Default
   m_EditorClassIdentifier: 
-  maxLives: 10
+  maxLives: 3
   minLifeHP: 600
   maxLifeHP: 600
   rotationSpeed: 120
